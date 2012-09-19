@@ -1,5 +1,5 @@
 test:
-  adapter: mysql2
+  adapter: mysql
   database: test
   username: root
   host: localhost

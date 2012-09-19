@@ -6,11 +6,11 @@ module Factory
       end
 
       def self.included(base)
-        Dir[Rails.application.root.join("app/models/**/*.rb")].each do |file|
+        Dir[File.join(RAILS_ROOT, "app/models/**/*.rb")].each do |file|
           require_dependency file
-        end if defined?(Rails)
+        end
 
-        ActiveRecord::Base.descendants.each do |model|
+        ActiveRecord::Base.send(:subclasses).each do |model|
           method_name = model.name.underscore.gsub("/", "_").pluralize
 
           class_eval <<-RUBY, __FILE__, __LINE__

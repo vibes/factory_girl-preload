@@ -1,29 +1,22 @@
-ENV["RAILS_ENV"] = "test"
-require "rails"
+RAILS_ENV = "test"
+RAILS_ROOT = File.dirname(__FILE__) + "/support/app"
 
-ENV["BUNDLE_GEMFILE"] = File.dirname(__FILE__) + "/../Gemfile"
-require "bundler"
-Bundler.setup
-require "rails/all"
-Bundler.require(:default)
+require 'vibes-rspec-rails23'
+require "rspec/autorun"
 
-require "rspec/rails"
+require 'active_record'
 require "factory_girl"
-require File.dirname(__FILE__) + "/support/factories"
+require "factory_girl-preload"
 
-module RSpec
-  class Application < ::Rails::Application
-    config.root = File.dirname(__FILE__) + "/support/app"
-    config.active_support.deprecation = :log
-    # config.active_record.logger = Logger.new(STDOUT)
-  end
-end
+ActiveRecord::Base.configurations = YAML::load(ERB.new(IO.read(File.join(RAILS_ROOT, 'config/database.yml'))).result)
+ActiveRecord::Base.establish_connection :test
 
-RSpec::Application.initialize!
 load File.dirname(__FILE__) + "/support/app/db/schema.rb"
 
+require File.dirname(__FILE__) + "/support/factories"
+
 RSpec.configure do |config|
-  config.use_transactional_fixtures = true
+  config.enable_reasonable_defaults!
 end
 
 Factory::Preload.run

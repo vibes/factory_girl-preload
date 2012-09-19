@@ -30,7 +30,7 @@ module Factory
         when "PostgreSQL" then "TRUNCATE TABLE %s RESTART IDENTITY"
         else "TRUNCATE TABLE %s"
       end
-      names = ActiveRecord::Base.descendants.collect(&:table_name).uniq if names.empty?
+      names = ActiveRecord::Base.send(:subclasses).collect(&:table_name).uniq if names.empty?
       ActiveRecord::Base.connection.disable_referential_integrity do
         names.each {|table| ActiveRecord::Base.connection.execute(query % ActiveRecord::Base.connection.quote_table_name(table))}
       end
