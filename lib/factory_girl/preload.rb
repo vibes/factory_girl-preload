@@ -1,3 +1,5 @@
+require 'database_cleaner'
+
 module Factory
   module Preload
     autoload :Helpers, "factory_girl/preload/helpers"
@@ -24,16 +26,8 @@ module Factory
       end
     end
 
-    def self.clean(*names)
-      query = case ActiveRecord::Base.connection.adapter_name
-        when "SQLite"     then "DELETE FROM %s"
-        when "PostgreSQL" then "TRUNCATE TABLE %s RESTART IDENTITY"
-        else "TRUNCATE TABLE %s"
-      end
-      names = ActiveRecord::Base.send(:subclasses).collect(&:table_name).uniq if names.empty?
-      ActiveRecord::Base.connection.disable_referential_integrity do
-        names.each {|table| ActiveRecord::Base.connection.execute(query % ActiveRecord::Base.connection.quote_table_name(table))}
-      end
+    def self.clean
+      DatabaseCleaner.clean_with(:truncation)
     end
 
     def self.reload_factories
