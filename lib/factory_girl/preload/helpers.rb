@@ -13,11 +13,11 @@ module Factory
         ActiveRecord::Base.send(:subclasses).each do |model|
           method_name = model.name.underscore.gsub("/", "_").pluralize
 
-          class_eval <<-RUBY, __FILE__, __LINE__
-            def #{method_name}(name)
-              factory(name, #{model})
+          class_eval do
+            define_method method_name do |name|
+              factory(name, model)
             end
-          RUBY
+          end
         end
       end
 
