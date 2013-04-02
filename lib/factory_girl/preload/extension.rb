@@ -9,7 +9,7 @@ module FactoryGirl
     module Default
       class DSL
         def preload(&block)
-          ::Factory.preload(&block)
+          ::FactoryGirl.preload(&block)
         end
       end
     end
