@@ -19,4 +19,4 @@ RSpec.configure do |config|
   config.enable_reasonable_defaults!
 end
 
-Factory::Preload.run
+FactoryGirl::Preload.run

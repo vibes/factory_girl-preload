@@ -1,4 +1,4 @@
-module Factory
+module FactoryGirl
   def self.preload(&block)
     Preload.preloaders << block
   end

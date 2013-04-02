@@ -4,7 +4,7 @@ require "factory_girl/preload/version"
 
 Gem::Specification.new do |s|
   s.name        = "factory_girl-preload"
-  s.version     = Factory::Preload::Version::STRING
+  s.version     = FactoryGirl::Preload::Version::STRING
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Nando Vieira"]
   s.email       = ["fnando.vieira@gmail.com"]
