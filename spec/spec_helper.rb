@@ -15,6 +15,8 @@ load File.dirname(__FILE__) + "/support/app/db/schema.rb"
 
 require File.dirname(__FILE__) + "/support/factories"
 
+DatabaseCleaner[:active_record].strategy = :truncation
+
 RSpec.configure do |config|
   config.enable_reasonable_defaults!
 end
