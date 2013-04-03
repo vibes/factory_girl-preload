@@ -29,7 +29,7 @@ module FactoryGirl
     end
 
     def self.clean
-      DatabaseCleaner.clean_with(:truncation)
+      DatabaseCleaner.clean
     end
 
     def self.reload_factories
