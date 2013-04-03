@@ -13,9 +13,11 @@ module FactoryGirl
         ActiveRecord::Base.send(:subclasses).each do |model|
           method_name = model.name.underscore.gsub("/", "_").pluralize
 
-          class_eval do
-            define_method method_name do |name|
-              factory(name, model)
+          unless method_name.empty?
+            class_eval do
+              define_method method_name do |name|
+                factory(name, model)
+              end
             end
           end
         end
